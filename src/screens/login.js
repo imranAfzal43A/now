@@ -17,12 +17,12 @@ const Login = (props) => {
                 <Text>Login to your <Text style={{ fontSize: 28, fontWeight: 'bold', color: 'blue' }} >Now</Text> acount</Text>
                 <TextInput style={styles.inputText} placeholder="email" onChangeText={(t) => setEmail(t)} />
                 <TextInput placeholder="password" onChangeText={(t) => setPassword(t)} />
-                <Pressable style={styles.button} onPress={() => onLogin()} ><Text>Login</Text></Pressable>
+                <Pressable style={styles.button} onPress={() =>props.navigation.navigate('Home')} ><Text>Login</Text></Pressable>
             </View>
             <View>
                 <Text>Don't have an acount?
                     <Pressable>
-                        <Text style={{ fontSize: 22, fontWeight: 'bold', color: 'blue' }} >Create acount </Text>
+                        <Text style={{ fontSize: 22, fontWeight: 'bold', color: 'blue' }} onPress={()=>props.navigation.navigate('Sign up')} >Create acount </Text>
                     </Pressable>
                 </Text>
             </View>
