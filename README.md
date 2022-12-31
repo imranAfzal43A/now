@@ -1,2 +1,5 @@
 # now
-Its a massenger app under development
+Its a Messenger app
+Features:
+Authentication:Firebase authentication
+Database:Firestore database
