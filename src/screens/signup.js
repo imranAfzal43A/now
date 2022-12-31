@@ -17,9 +17,11 @@ const Signup = (props) => {
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
                 const docRef = doc(db, auth.currentUser.email, auth.currentUser.email);
+                const docRefU = doc(db, 'users', auth.currentUser.email);
                 try {
                     await updateProfile(auth.currentUser, { displayName: name })
                     await setDoc(docRef, data)
+                    await setDoc(docRefU, data)
                     setLoading(false)
                     alert('Acount created successfully')
                     props.navigation.goBack();

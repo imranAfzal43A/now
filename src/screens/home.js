@@ -37,7 +37,7 @@ const Home = (props) => {
             item.Name == auth.currentUser.displayName ?
                 null
                 :
-                <TouchableOpacity style={styles.showUserStyle} onPress={() => props.navigation.navigate('Chat', { chatId: generateChatId(loginUser, item.Email) })} >
+                <TouchableOpacity style={styles.showUserStyle} onPress={() => props.navigation.navigate('Chat', { chatId: generateChatId(loginUser, item.Email), otherUserE: item.Email, otherUserN: item.Name })} >
                     <Text style={{ fontSize: 14, fontWeight: "bold" }} >
                         {item.Name}
                     </Text>

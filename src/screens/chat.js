@@ -12,7 +12,9 @@ const Chat = (props) => {
     const [mesData, setMesdata] = useState([]);
     const [loading, setLoading] = useState(false);
     const userData = { Name: otherUserN, Email: otherUserE };
-    const docRefUser = collection(db, auth.currentUser.email);
+    console.log('auth. :', auth.currentUser.email)
+    console.log('other user :', otherUserE)
+    const docRefUser = doc(db, auth.currentUser.email, otherUserE);
     const data = { mess: mes, sender: auth.currentUser.displayName, time: Timestamp.now() }
     const Loadchatdata = async () => {
         try {
@@ -23,6 +25,7 @@ const Chat = (props) => {
                 querySnapshot.forEach((doc) => {
                     messDoc.push(doc.data());
                 })
+                console.log(querySnapshot)
                 setLoading(false);
                 setMesdata(messDoc);
             })
@@ -33,7 +36,7 @@ const Chat = (props) => {
     }
     const addChatUser = async () => {
         try {
-            await addDoc(docRefUser, userData);
+            await setDoc(docRefUser, userData, { merge: true });
         } catch (e) {
             console.log(e)
         }
@@ -61,20 +64,21 @@ const Chat = (props) => {
         )
     }
     const OnSend = async () => {
-        setMes(null)
-        try {
-            await addDoc(docRef, data);
-        } catch (e) {
-            alert('Please check your internet connection')
-            console.log(e)
+        if (mes != null) {
+            setMes(null)
+            try {
+                await addDoc(docRef, data);
+            } catch (e) {
+                alert('Please check your internet connection')
+                console.log(e)
+            }
         }
     }
     return (
         < View style={{ flex: 1 }} >
-
             <View style={{ flex: 200 }}>
-                {!loading ? <FlatList data={mesData} renderItem={Showchat} /> : <ActivityIndicator size={'large'} />}
-            </View>
+                {!loading ? <FlatList  data={mesData} renderItem={Showchat} /> : <ActivityIndicator size={'large'} />}
+            </View >
             <ScrollView >
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TextInput style={{ padding: 5, width: '50%' }} value={mes} multiline={true} placeholder="Message" onChangeText={(t) => setMes(t)} />
